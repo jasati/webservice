@@ -57,31 +57,31 @@ $app->get('/', function () {
 
 
 /*Ecold*/
-$app->post('/'.MODULO_SYS.'/consulta', function () {;  
+$app->post('/consulta', function () {;  
 	$router = new Router(requestEndPoint());
 });
-$app->post('/'.MODULO_SYS.'/load', function () {
-	$router = new Router(requestEndPoint());
-});
-
-$app->post('/'.MODULO_SYS.'/novo', function () {
+$app->post('/load', function () {
 	$router = new Router(requestEndPoint());
 });
 
-$app->post('/'.MODULO_SYS.'/editar', function () {
+$app->post('/novo', function () {
 	$router = new Router(requestEndPoint());
 });
 
-$app->post('/'.MODULO_SYS.'/delete', function(){
+$app->post('/editar', function () {
 	$router = new Router(requestEndPoint());
 });
 
-$app->post('/'.MODULO_SYS.'/upload/:id_emp,:redim', function($id_emp,$redim){
+$app->post('/delete', function(){
+	$router = new Router(requestEndPoint());
+});
+
+$app->post('/upload/:id_emp,:redim', function($id_emp,$redim){
 	$arr = array('id_emp' => $id_emp, 'redim' => $redim );
 	$router = new Router($arr);
 });
 
-$app->post('/'.MODULO_SYS.'/deleteimg', function(){
+$app->post('/deleteimg', function(){
 	$dados = requestEndPoint();
 	if (isset($dados['nomeImg'])) {
 		$img = 'App/Upload/' . $dados['nomeImg'];
@@ -90,79 +90,11 @@ $app->post('/'.MODULO_SYS.'/deleteimg', function(){
 	} else {
 		echo json_encode(array('status' => 'Error! imagem não removida.' ));
 	}
-	
 });
 
-$app->post('/'.MODULO_SYS.'/functionSql', function(){
+$app->post('/functionSql', function(){
 	$router = new Router(requestEndPoint());
 });
 
-/*empresa*/
-$app->post('/empresa', function () {
-	$router = new Router(requestEndPoint());
-});
-$app->post('/empresa/load', function () {
-	$router = new Router(requestEndPoint());
-});
-
-$app->post('/empresa/novo', function () {
-	$router = new Router(requestEndPoint());
-});
-
-$app->post('/empresa/editar', function () {
-	$router = new Router(requestEndPoint());
-});
-$app->delete('/empresa/delete/:id', function($id){
-	$router = new Router($id);
-});
-
-
-/*itens*/
-$app->post('/item', function(){
-	$router = new Router(requestEndPoint());
-});
-
-$app->post('/item/novo', function () {
-	$router = new Router(requestEndPoint());
-});
-
-$app->post('/item/editar', function () {
-	$router = new Router(requestEndPoint());
-});
-
-$app->delete('/item/delete/:id', function($id){
-	$router = new Router($id);
-});
-
-/*Movimento de Estoque*/
-$app->post('/movimento/entradas', function(){
-    $router = new Router(requestEndPoint());
-});
-
-$app->post('/movimento/saidas', function(){
-	$router = new Router(requestEndPoint());
-});
-
-$app->post('/movimento/novo', function () {
-	$router = new Router(requestEndPoint());
-});
-
-/*Itens do Movimento*/
-
-$app->post('/movimentoitens', function(){
-    $router = new Router(requestEndPoint());
-});
-
-$app->post('/movimentoitens/novo', function () {
-	$router = new Router(requestEndPoint());
-});
-
-$app->post('/movimentoitens/editar', function () {
-	$router = new Router(requestEndPoint());
-});
-
-$app->delete('/movimentoitens/delete/:id', function($id){
-	$router = new Router($id);
-});
 
 $app->run();
