@@ -5,7 +5,7 @@ use Jasati\Core\Master_Model;
 /**
 * Index model
 */
-class Ecold_Model extends Master_Model
+class V1_Model extends Master_Model
 {
 
 	/**
@@ -17,18 +17,17 @@ class Ecold_Model extends Master_Model
 	 * valor_id = o valor id da tabela
 	 * estrutura = os campos da tabela e valores
 	 * consulta = sql where
-	 */
-	
+	 */	
 	public function load($value)
 	{
-		$this->connectDb($value['modulo']);
+		$this->connectDb($value['db'],$value['modulo']);
 		$where = array('where' =>[$value['id_tabela'] . ' = ' . $value['valor_id']]);
 		return $this->db->read('first',$where);
 	}
 
 	public function select($value)
 	{
-		$this->connectDb($value['modulo']);
+		$this->connectDb($value['db'],$value['modulo']);
 		$where = array('where' =>$value['id_index_main'] . ' = '. $value['valor_id_main'] . $value['consulta']);
 
 		if (isset($value['campos'])) {
@@ -74,7 +73,7 @@ class Ecold_Model extends Master_Model
 
 	public function novo($value)
 	{
-		$this->connectDb($value['modulo']);
+		$this->connectDb($value['db'],$value['modulo']);
 		if (isset($value['estrutura'][0])) {
 			//print_r($value['estrutura']);
 			for ($i=0; $i < count($value['estrutura']); $i++) {
@@ -88,21 +87,21 @@ class Ecold_Model extends Master_Model
 
 	public function update($value)
 	{
-		$this->connectDb($value['modulo']);
+		$this->connectDb($value['db'],$value['modulo']);
 		$where = array($value['id_tabela'] =>$value['valor_id']);
 		return $this->db->update($where,$value['estrutura']);
 	}
 
 	public function delete($value)
 	{
-		$this->connectDb($value['modulo']);
+		$this->connectDb($value['db'],$value['modulo']);
 		return $this->db->delete([$value['id_tabela']=>$value['valor_id']]);
 	}
 	public function upload($value)
 	{
 		$nomeArq = $this->uploadImg($value['id_emp'],$value['redim']);
 		if ($nomeArq['status']=='ok') {
-			$this->connectDb('galeria');
+			$this->connectDb($value['db'],'galeria');
 			$estrutura = array('id_emp' =>$value['id_emp'] , 'imagem'=> $nomeArq['nomeArq']);
 			return $this->db->create($estrutura);
 		} else {
@@ -112,7 +111,7 @@ class Ecold_Model extends Master_Model
 
 	public function getFunctionSql($value)
 	{
-		$this->connectDb($value['modulo']);
+		$this->connectDb($value['db'],$value['modulo']);
 		return $this->db->functionSql($value['valor_id']);
 	}
 }

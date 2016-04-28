@@ -22,7 +22,7 @@ class Master_Model
 	{
 		$this->mvc = $returnMvc;
 	}
-	public function connectDb($table=null)
+	public function connectDb($nomeDb=null,$table=null)
 	{
 		$this->table = $table;
 		if (!isset($this->table)) {
@@ -30,7 +30,7 @@ class Master_Model
 		}
 		if ($this->table) {
 			$config = new Config();
-			$db = $config->database;			
+			$db = $config->database($nomeDb);			
 			$data_source='Jasati\Core\Master\Db_'.$db['tipo'];
 			$this->db = new $data_source($db,$this->table);
 		}

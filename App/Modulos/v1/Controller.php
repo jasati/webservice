@@ -5,9 +5,10 @@ use Jasati\Core\Master_Controller;
 /**
 * master controller
 */
-class Ecold_Controller extends Master_Controller
+class V1_Controller extends Master_Controller
 {
 	private $error = array('status' => 'error', 'msg'=>'');
+
 	public function consulta($value)
 	{
 		try {

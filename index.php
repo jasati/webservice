@@ -28,7 +28,7 @@ spl_autoload_register(array($autoLoad, 'loadCore'));
 spl_autoload_register(array($autoLoad, 'load'));
 use Jasati\Core\Router;
 
-define('MODULO_SYS', 'ecold');
+define('MODULO_SYS', 'v1');
 
 
 session_start();
@@ -51,37 +51,37 @@ function requestEndPoint()
 }
 
 $app->get('/', function () {
-    //inicio
-    $router = new Router("***eCold - Sistema para Controle de Sorveterias***");
+    //
+    $router = new Router("***WebService Jasati V1.0***");
 });
 
 
 /*Ecold*/
-$app->post('/consulta', function () {;  
+$app->post('/'.MODULO_SYS.'/consulta', function () {;  
 	$router = new Router(requestEndPoint());
 });
-$app->post('/load', function () {
-	$router = new Router(requestEndPoint());
-});
-
-$app->post('/novo', function () {
+$app->post('/'.MODULO_SYS.'/load', function () {
 	$router = new Router(requestEndPoint());
 });
 
-$app->post('/editar', function () {
+$app->post('/'.MODULO_SYS.'/novo', function () {
 	$router = new Router(requestEndPoint());
 });
 
-$app->post('/delete', function(){
+$app->post('/'.MODULO_SYS.'/editar', function () {
 	$router = new Router(requestEndPoint());
 });
 
-$app->post('/upload/:id_emp,:redim', function($id_emp,$redim){
+$app->post('/'.MODULO_SYS.'/'.MODULO_SYS.'/delete', function(){
+	$router = new Router(requestEndPoint());
+});
+
+$app->post('/'.MODULO_SYS.'/upload/:id_emp,:redim', function($id_emp,$redim){
 	$arr = array('id_emp' => $id_emp, 'redim' => $redim );
 	$router = new Router($arr);
 });
 
-$app->post('/deleteimg', function(){
+$app->post('/'.MODULO_SYS.'/deleteimg', function(){
 	$dados = requestEndPoint();
 	if (isset($dados['nomeImg'])) {
 		$img = 'App/Upload/' . $dados['nomeImg'];
@@ -92,7 +92,7 @@ $app->post('/deleteimg', function(){
 	}
 });
 
-$app->post('/functionSql', function(){
+$app->post('/'.MODULO_SYS.'/functionSql', function(){
 	$router = new Router(requestEndPoint());
 });
 

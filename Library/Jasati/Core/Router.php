@@ -84,7 +84,6 @@ class Router
     {
         $controller=$this->mvc['controller'].'_Controller';
         $action=$this->mvc['action'];
-            
         $controller = new $controller($this->mvc);
         $controller->$action($value);
         
