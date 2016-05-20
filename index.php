@@ -72,7 +72,7 @@ $app->post('/'.MODULO_SYS.'/editar', function () {
 	$router = new Router(requestEndPoint());
 });
 
-$app->post('/'.MODULO_SYS.'/'.MODULO_SYS.'/delete', function(){
+$app->post('/'.MODULO_SYS.'/delete', function(){
 	$router = new Router(requestEndPoint());
 });
 
