@@ -128,7 +128,8 @@ class Db_Mysql extends Suporte_Pdo
 
 	public function functionSql($input)
 	{
-		$sql = 'SELECT '.$this->table.'('.$input.');';
-		return $this->pdo($sql,['prm'=>$input]);		
+		$sql = 'SELECT '.$this->table.'('.$input.') as result;';
+		$this->pdo($sql,['prm'=>$input]);
+		return $this->mysql_exec->fetch(PDO::FETCH_ASSOC);		
 	}
 }
