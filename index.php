@@ -43,6 +43,7 @@ $app = new \Slim\Slim();
  * @return json com os dados da consulta
  */
 
+
 function requestEndPoint()
 {
 	$request = \Slim\Slim::getInstance()->request();
@@ -96,5 +97,27 @@ $app->post('/'.MODULO_SYS.'/functionSql', function(){
 	$router = new Router(requestEndPoint());
 });
 
+$app->post('/'.MODULO_SYS.'/report', function(){
+require 'Library'.DS.'MPDF'.DS.'mpdf.php';
+	$dados = requestEndPoint();
+	$ret = [];
+	if ($dados['prm']==='C') {
+		if ($dados['page']==='L') {
+			$mpdf = new mPDF('utf-8', 'A4-L');
+		} else {
+			$mpdf = new mPDF;
+		}
+		$name = $dados['nomePrefix'].$dados['numero'].'.pdf';
+		$html = $dados['html'];
+		$mpdf->WriteHTML($html);
+		$mpdf->Output('App'.DS.'Tmp'.DS.$name,'F');
+		$ret = json_encode(array( 'report_name' => $name));
+	} else {
+		$nomePrefix = $dados['nomePrefix'];
+		array_map('unlink', glob('App'.DS.'Tmp'.DS.$nomePrefix.'*.pdf'));//apagar os arquivos
+		$ret = json_encode(array( 'status' => 'ok'));
+	}
+	echo $ret;
+});
 
 $app->run();
