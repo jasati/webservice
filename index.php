@@ -120,4 +120,9 @@ require 'Library'.DS.'MPDF'.DS.'mpdf.php';
 	echo $ret;
 });
 
+$app->post('/'.MODULO_SYS.'/ipaddr', function(){
+	$ret = json_encode(array('andress' => $_SERVER["REMOTE_ADDR"]));
+	echo $ret;
+});
+
 $app->run();
