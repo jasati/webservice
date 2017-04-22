@@ -48,7 +48,6 @@ class Db_Mysql extends Suporte_Pdo
 
 	public function read($tipo='all', Array $configs=array())
 	{
-
 		$save['sql']='';
 		$save['save']=array();
 
@@ -117,8 +116,33 @@ class Db_Mysql extends Suporte_Pdo
 
 	}
 
+	public function updateM(Array $campos, $primarykey)
+	{
+		$save = $this->getCampos($campos);
+		$conditions = array($primarykey => $campos[$primarykey]);
+		//print_r($conditions);
+		$conditions = $this->getCampos($conditions);
+
+		$save['save']=array_merge($save['save'], $conditions['save']);
+		//print_r($save['save']);
+
+		$sql = 'UPDATE '.$this->table.' SET '.$save['sql'].' WHERE '.$conditions['sql'].';';
+		//print_r($sql);
+		return $this->pdo($sql, $save['save']);
+	}
+
 	public function delete(Array $conditions)
 	{
+		$save = $this->getCampos($conditions);
+
+		$sql = 'DELETE FROM '.$this->table.' WHERE '.$save['sql'].';';
+		//print_r($sql);
+		return $this->pdo($sql, $save['save']);
+	}
+
+	public function deleteM(Array $campos, $primarykey)
+	{
+		$conditions = array($primarykey => $campos[$primarykey]);
 		$save = $this->getCampos($conditions);
 
 		$sql = 'DELETE FROM '.$this->table.' WHERE '.$save['sql'].';';

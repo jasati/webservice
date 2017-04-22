@@ -46,7 +46,7 @@ class Master_View
 	public function templateUrl($string=null)
 	{
 		//Retorna URL (do navegador) base do tema
-		return '../App/Templates/'.$this->tema.'/'.$string;
+		return 'http://'.$_SERVER['SERVER_NAME'].'/App/Templates/'.$this->tema.'/'.$string;
 	}
 
 	public function __destruct()

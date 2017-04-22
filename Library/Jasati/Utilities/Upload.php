@@ -15,8 +15,9 @@ class Upload{
         
     } 
     private function getExtensao(){ //retorna a extensao da imagem
-        
-    	return $extensao = strtolower(end(explode('.', $this->arquivo['name']))); 
+        $name = $this->arquivo['name'];
+        $name = explode('.', $name);
+    	return $extensao = strtolower(end($name)); 
         
     } 
     private function ehImagem($extensao){ 
@@ -38,7 +39,7 @@ class Upload{
             $novaLarg = round( ($novaAlt / $imgAlt) * $imgLarg ); 
             
         } else // altura == largura 
-            $novaAltura = $novaLargura = max($this->largura, $this->altura); 
+            $novaAlt = $novaLarg = max($this->largura, $this->altura); 
         //redimencionar a imagem //cria uma nova imagem com o novo tamanho	
         $novaimagem = imagecreatetruecolor($novaLarg, $novaAlt); 
         switch ($tipo){ 
@@ -67,10 +68,12 @@ class Upload{
         $novo_nome = $emp.'_'.time() . '.' . $extensao; //localizacao do arquivo 
         $destino = $this->pasta . $novo_nome; //move o arquivo 
         if (! move_uploaded_file($this->arquivo['tmp_name'], $destino)){ 
-            if ($this->arquivo['error'] == 1) 
-                return array('status'=>'erro','error' => "Tamanho excede o permitido" ); 
-            else 
-                return array('status'=>'erro','error' => $this->arquivo['error'] ); 
+            if ($this->arquivo['error'] == 1) {
+                return array('status'=>'error','msg' => "Tamanho excede o permitido" ); 
+            }
+            else {
+                return array('status'=>'error','msg' => $this->arquivo['error'] ); 
+            }
             
         } 
         

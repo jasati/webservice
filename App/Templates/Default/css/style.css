@@ -1,0 +1,31 @@
+
+#rel{
+	position: relative !important; top:0; left:0;
+} 
+#abs{
+	position: absolute !important; 
+	top:10px;
+} 
+body{
+	color:black !important;
+} 
+table {
+	font-family: arial, sans-serif !important; 
+	border-collapse: collapse !important; 
+	width: 100% !important;
+}
+td, th {
+	border: 1px solid #8c8c8c !important;
+	padding: 3px;
+} 
+th{
+	color: #FFF;
+	background-color: #777;
+} 
+tbody tr:nth-child(even) {
+   background-color: lightgray;
+}
+b{
+	font-weight: bold !important;
+}
+@import 'App/Templates/Default/css/bootstrap.min.css';

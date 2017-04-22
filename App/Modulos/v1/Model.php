@@ -88,24 +88,43 @@ class V1_Model extends Master_Model
 	public function update($value)
 	{
 		$this->connectDb($value['db'],$value['modulo']);
-		$where = array($value['id_tabela'] =>$value['valor_id']);
-		return $this->db->update($where,$value['estrutura']);
+		//$where = array($value['id_tabela'] =>$value['valor_id']);
+		//return $this->db->update($where,$value['estrutura']);
+		if (isset($value['estrutura'][0])) {
+			for ($i=0; $i < count($value['estrutura']); $i++) {
+				$r = $this->db->updateM($value['estrutura'][$i],$value['id_tabela']);
+			}
+			return $r;
+		} else {
+			return $this->db->updateM($value['estrutura'],$value['id_tabela']);
+		}
+		
 	}
 
 	public function delete($value)
 	{
 		$this->connectDb($value['db'],$value['modulo']);
-		return $this->db->delete([$value['id_tabela']=>$value['valor_id']]);
+		if (isset($value['estrutura'][0])) {
+			for ($i=0; $i < count($value['estrutura']); $i++) {
+				$r = $this->db->deleteM($value['estrutura'][$i],$value['id_tabela']);
+			}
+			return $r;
+		} else {
+			return $this->db->delete([$value['id_tabela']=>$value['valor_id']]);
+		}
 	}
 	public function upload($value)
 	{
 		$nomeArq = $this->uploadImg($value['id_emp'],$value['redim']);
 		if ($nomeArq['status']=='ok') {
 			$this->connectDb($value['db'],'galeria');
-			$estrutura = array('id_emp' =>$value['id_emp'] , 'imagem'=> $nomeArq['nomeArq']);
-			return $this->db->create($estrutura);
+
+			$estrutura = array('id_emp' =>$value['id_emp'] , 'imagem'=> $nomeArq['nomeArq'], 'doc'=>$value['doc']);
+
+			$resp = $this->db->create($estrutura);
+			return array_merge($resp,$estrutura);
 		} else {
-			return array('error' => 'Falha na gravação da galeria' );
+			return $nomeArq;
 		}
 	}
 
@@ -113,6 +132,10 @@ class V1_Model extends Master_Model
 	{
 		$this->connectDb($value['db'],$value['modulo']);
 		return $this->db->functionSql($value['valor_id']);
+	}
+	public function log($value)
+	{
+		$this->logger($value);
 	}
 }
 

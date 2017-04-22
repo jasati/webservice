@@ -13,7 +13,6 @@ define('DS',DIRECTORY_SEPARATOR);
 define('ROOT',dirname(__FILE__));
 
 
-
 require 'Library'.DS.'Jasati'.DS.'Core'.DS.'AutoLoad.php';
 require 'Library'.DS.'Slim'.DS.'Slim.php';
 
@@ -53,7 +52,7 @@ function requestEndPoint()
 
 $app->get('/', function () {
     //
-    $router = new Router("***WebService Jasati V1.0***");
+    echo "<h1>***WebService Jasati V1.0***<h1>";
 });
 
 
@@ -77,9 +76,10 @@ $app->post('/'.MODULO_SYS.'/delete', function(){
 	$router = new Router(requestEndPoint());
 });
 
-$app->post('/'.MODULO_SYS.'/upload/:id_emp,:redim', function($id_emp,$redim){
-	$arr = array('id_emp' => $id_emp, 'redim' => $redim );
-	$router = new Router($arr);
+$app->post('/'.MODULO_SYS.'/upload/:id_emp,:redim,:db,:doc', function($id_emp,$redim,$db,$doc){
+
+	$dados = array('id_emp' => $id_emp, 'redim' => $redim, 'db' => $db, 'doc' => $doc);
+	$router = new Router($dados);
 });
 
 $app->post('/'.MODULO_SYS.'/deleteimg', function(){
@@ -87,9 +87,9 @@ $app->post('/'.MODULO_SYS.'/deleteimg', function(){
 	if (isset($dados['nomeImg'])) {
 		$img = 'App/Upload/' . $dados['nomeImg'];
 		unlink($img);
-		echo json_encode(array('status' => 'Sucess! imagem removida.' ));
+		echo json_encode(array('status' => 'ok','msg'=>'Imagem removida.' ));
 	} else {
-		echo json_encode(array('status' => 'Error! imagem não removida.' ));
+		echo json_encode(array('status' => 'error','msg'=>'Imagem não removida.' ));
 	}
 });
 
@@ -109,7 +109,11 @@ require 'Library'.DS.'MPDF'.DS.'mpdf.php';
 		}
 		$name = $dados['nomePrefix'].$dados['numero'].'.pdf';
 		$html = $dados['html'];
-		$mpdf->WriteHTML($html);
+		//$stylesheet1 = file_get_contents('App'.DS.'Templates'.DS.'Default'.DS.'css'.DS.'bootstrap.min.css');
+		$stylesheet2 = file_get_contents('App'.DS.'Templates'.DS.'Default'.DS.'css'.DS.'style.css');
+		//$mpdf->WriteHTML($stylesheet1,1);
+		$mpdf->WriteHTML($stylesheet2,1);
+		$mpdf->WriteHTML($html,2);
 		$mpdf->Output('App'.DS.'Tmp'.DS.$name,'F');
 		$ret = json_encode(array( 'report_name' => $name));
 	} else {
@@ -123,6 +127,33 @@ require 'Library'.DS.'MPDF'.DS.'mpdf.php';
 $app->post('/'.MODULO_SYS.'/ipaddr', function(){
 	$ret = json_encode(array('andress' => $_SERVER["REMOTE_ADDR"]));
 	echo $ret;
+});
+
+$app->post('/'.MODULO_SYS.'/pagseguro', function(){
+	$router = new Router(requestEndPoint());
+});
+
+$app->post('/'.MODULO_SYS.'/getResponse', function(){
+	$router = new Router(requestEndPoint());
+});
+
+
+$app->post('/'.MODULO_SYS.'/enviarEmail', function(){
+	$router = new Router(requestEndPoint());
+});
+
+$app->post('/'.MODULO_SYS.'/dataAtual', function(){
+	$tz = 'America/Sao_Paulo';
+	$timestamp = time();
+	$dt = new DateTime("now", new DateTimeZone($tz)); //first argument "must" be a string
+	$dt->setTimestamp($timestamp); //adjust the object to correct timestamp
+	$dt->format('Y-m-d');
+	$ret = json_encode(array('data' => $dt->format('Y-m-d')));
+	echo $ret;
+});
+
+$app->post('/'.MODULO_SYS.'/licenca', function () {
+	$router = new Router(requestEndPoint());
 });
 
 $app->run();
