@@ -45,6 +45,15 @@ class Config
                 'database'=>$value);
                 $this->appnome = "smart_reserva";
                 break;
+            case 'base_inicial':
+                $db = array(
+                'tipo'=>'Mysql',
+                'servidor'=>'localhost',
+                'usuario'=>'root',
+                'senha'=>'mySql',
+                'database'=>$value);
+                $this->appnome = "base_inicial";
+                break;                
             default:
                 
                 break;

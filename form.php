@@ -11,10 +11,10 @@
 		<input type="number" name="callback_type" placeholder="1 Compra ou 2 cancelamento" value="1">
 	</div>	
 	<div>
-		<input type="text" name="status" placeholder="Status" value="Aprovado">
+		<input type="text" name="status" placeholder="Status" value="approved">
 	</div>
 	<div>
-		<input type="number" name="xcod" placeholder="Codigo da empresa" value="21">
+		<input type="email" name="email" placeholder="email" value="jalan.alves@gmail.com">
 	</div>
 	<div>
 		<input type="text" name="name_subscription_plan" placeholder="Nome do plano" value="locdress_mb">
