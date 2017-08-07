@@ -10,7 +10,7 @@ class Config
     {
         switch ($value) {
             case 'sorveteria':
-                $db = array(        
+                $db = array(
                 'tipo'=>'Mysql',
                 'servidor'=>'localhost',
                 'usuario'=>'root',
@@ -19,7 +19,7 @@ class Config
                 $this->appnome = "eCold";
                 break;
             case 'mucompras':
-                $db = array(        
+                $db = array(
                 'tipo'=>'Mysql',
                 'servidor'=>'localhost',
                 'usuario'=>'root',
@@ -53,9 +53,18 @@ class Config
                 'senha'=>'mySql',
                 'database'=>$value);
                 $this->appnome = "base_inicial";
-                break;                
+                break;
+                case 'ecc':
+                    $db = array(
+                    'tipo'=>'Mysql',
+                    'servidor'=>'localhost',
+                    'usuario'=>'root',
+                    'senha'=>'mySql',
+                    'database'=>$value);
+                    $this->appnome = "ecc";
+                    break;
             default:
-                
+
                 break;
         }
         return $db;

@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 use Jasati\Core\Master_Model;
 
@@ -17,7 +17,7 @@ class V1_Model extends Master_Model
 	 * valor_id = o valor id da tabela
 	 * estrutura = os campos da tabela e valores
 	 * consulta = sql where
-	 */	
+	 */
 	public function load($value)
 	{
 		$this->connectDb($value['db'],$value['modulo']);
@@ -34,7 +34,7 @@ class V1_Model extends Master_Model
 			if (!empty($value['campos'])) {
 				$where += array('campos' => $value['campos'] );
 			}
-		}		
+		}
 
 		if (isset($value['inner_join'])) {
 			if (!empty($value['inner_join'])) {
@@ -46,19 +46,19 @@ class V1_Model extends Master_Model
 			if (!empty($value['left_join'])) {
 				$where += array('left_join' => $value['left_join'] );
 			}
-		}		
-		
+		}
+
 		if (isset($value['group by'])) {
 			if (!empty($value['group by'])) {
 				$where += array('group by' => $value['group by'] );
 			}
-		}		
+		}
 
 		if (isset($value['order by'])) {
 			if (!empty($value['order by'])) {
 				$where += array('order by' => $value['order by'] );
 			}
-		}			
+		}
 		//pegar a quantidade de registros da consulta
 		$ret = array('qtde' => $this->db->read('count',$where));
 
@@ -98,7 +98,7 @@ class V1_Model extends Master_Model
 		} else {
 			return $this->db->updateM($value['estrutura'],$value['id_tabela']);
 		}
-		
+
 	}
 
 	public function delete($value)
@@ -138,4 +138,3 @@ class V1_Model extends Master_Model
 		$this->logger($value);
 	}
 }
-
