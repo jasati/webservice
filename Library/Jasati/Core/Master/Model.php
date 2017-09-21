@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Jasati\Core;
 
@@ -10,7 +10,7 @@ use \Jasati\Utilities\Upload;
 */
 class Master_Model
 {
-	
+
 	use \Jasati\Utilities\Inflector;
 
 	public $mvc;
@@ -30,9 +30,13 @@ class Master_Model
 		}
 		if ($this->table) {
 			$config = new Config();
-			$db = $config->database($nomeDb);			
-			$data_source='Jasati\Core\Master\Db_'.$db['tipo'];
-			$this->db = new $data_source($db,$this->table);
+			$db = $config->database($nomeDb);
+			if ($db != '') {
+				$data_source='Jasati\Core\Master\Db_'.$db['tipo'];
+				$this->db = new $data_source($db,$this->table);
+			} else {
+				die("O banco de dados ".$nomeDb.", não foi encontrado no aquivo de configurações.");
+			}
 		}
 	}
 
@@ -43,12 +47,17 @@ class Master_Model
 		    return $upload->salvar($emp,$redim);
 		} else {
 			return "Arquivo anexo não encontrado.";
-		}		
+		}
 	}
 	public function logger($value)
 	{
 		$myfile = fopen("log.txt", "w") ;
-		fwrite($myfile, $value); 
-	}	
+		fwrite($myfile, $value);
+	}
+	public function getStartSistema($sistema)
+	{
+		$config = new Config();
+		return $config->startSistema($sistema);
+	}
 
 }

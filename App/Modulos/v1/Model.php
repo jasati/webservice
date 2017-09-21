@@ -137,4 +137,9 @@ class V1_Model extends Master_Model
 	{
 		$this->logger($value);
 	}
+
+	public function startSistema($value)
+	{
+		return $this->getStartSistema($value);
+	}
 }

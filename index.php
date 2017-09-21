@@ -57,7 +57,7 @@ $app->get('/', function () {
 
 
 /*Ecold*/
-$app->post('/'.MODULO_SYS.'/consulta', function () {;  
+$app->post('/'.MODULO_SYS.'/consulta', function () {;
 	$router = new Router(requestEndPoint());
 });
 $app->post('/'.MODULO_SYS.'/load', function () {
@@ -154,6 +154,9 @@ $app->post('/'.MODULO_SYS.'/dataAtual', function(){
 
 $app->post('/'.MODULO_SYS.'/licenca', function () {
 	$router = new Router(requestEndPoint());
+});
+$app->post('/'.MODULO_SYS.'/startSistema/:sistema', function ($sistema) {
+	$router = new Router($sistema);
 });
 
 $app->run();

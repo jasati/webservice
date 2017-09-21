@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 use Jasati\Core\Master_Controller;
 
@@ -31,7 +31,7 @@ class V1_Controller extends Master_Controller
 			$this->error['msg'] = $e->getMessage();
 			$this->view->set('response',$this->error);
 		}
-		$this->view->set('response',$rep);		
+		$this->view->set('response',$rep);
 	}
 
 	public function novo($value)
@@ -42,8 +42,8 @@ class V1_Controller extends Master_Controller
 			$this->error['msg'] = $e->getMessage();
 			$this->view->set('response',$this->error);
 		}
-		$this->view->set('response',$rep);			
-		
+		$this->view->set('response',$rep);
+
 	}
 
 	public function editar($value)
@@ -54,9 +54,9 @@ class V1_Controller extends Master_Controller
 			$this->error['msg'] = $e->getMessage();
 			$this->view->set('response',$this->error);
 		}
-		$this->view->set('response',$rep);		
+		$this->view->set('response',$rep);
 	}
-	
+
 	public function delete($id)
 	{
 		try {
@@ -65,7 +65,7 @@ class V1_Controller extends Master_Controller
 			$this->error['msg'] = $e->getMessage();
 			$this->view->set('response',$this->error);
 		}
-		$this->view->set('response',$rep);			
+		$this->view->set('response',$rep);
 	}
 
 	public function upload($value)
@@ -76,7 +76,7 @@ class V1_Controller extends Master_Controller
 			$this->error['msg'] = $e->getMessage().' Arquivo : '.$e->getFile().' Linha '.$e->getLine();
 			$this->view->set('response',$this->error);
 		}
-		$this->view->set('response',$rep);		
+		$this->view->set('response',$rep);
 	}
 
 	public function functionSql($value)
@@ -87,7 +87,7 @@ class V1_Controller extends Master_Controller
 			$this->error['msg'] = $e->getMessage();
 			$this->view->set('response',$this->error);
 		}
-		$this->view->set('response',$rep);			
+		$this->view->set('response',$rep);
 	}
 
 	public function pagseguro($value)
@@ -96,7 +96,7 @@ class V1_Controller extends Master_Controller
 			if ((isset($value['url'])) and (isset($value['request']))) {
 				$url = $value['url'];
 				//
-				
+
 				//configurar curl
 				$curl = curl_init($url);
 				curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
@@ -106,9 +106,9 @@ class V1_Controller extends Master_Controller
 					$fields = http_build_query($value['fields']);
 					curl_setopt($curl, CURLOPT_POSTFIELDS, $fields);
 				}
-				
+
 				// curl_setopt($curl, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
-				//executa 
+				//executa
 				$xml = curl_exec($curl);
 				curl_close($curl);
 				//pega o xml e transforma e json
@@ -148,9 +148,9 @@ class V1_Controller extends Master_Controller
 					curl_setopt($curl, CURLOPT_POSTFIELDS, $fields);
 				}
 				curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
-				
+
 				// curl_setopt($curl, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
-				//executa 
+				//executa
 				$res = curl_exec($curl);
 				curl_close($curl);
 				//pega o xml e transforma e json
@@ -172,12 +172,12 @@ class V1_Controller extends Master_Controller
 	{
 		try {
 
-			$para = $value['email']; 
-			$assunto = $value['assunto']; 
-			$mensagem = $value['mensagem']; 
-			$headFrom = $value['head_from']; 
+			$para = $value['email'];
+			$assunto = $value['assunto'];
+			$mensagem = $value['mensagem'];
+			$headFrom = $value['head_from'];
 
-			//5 – agora inserimos as codificações corretas e tudo mais. 
+			//5 – agora inserimos as codificações corretas e tudo mais.
 			$headers = "Content-Type:text/html; charset=UTF-8\n";
 			$headers .= "From: ".$headFrom."\n";
 			//Vai ser //mostrado que o email partiu deste email e seguido do nome
@@ -212,6 +212,18 @@ class V1_Controller extends Master_Controller
 				fwrite($myfile, $str);
 			}
 			$this->view->set('response',array('status'=>'ok','msg'=> 'Dados recebido com sucesso.'));
+		} catch (Exception $e) {
+			$this->error['msg'] = $e->getMessage();
+			$this->view->set('response',$this->error);
+		}
+
+	}
+
+	public function startSistema($value)
+	{
+		try {
+			$rep = $this->model->startSistema($value);
+			$this->view->set('response',$rep);
 		} catch (Exception $e) {
 			$this->error['msg'] = $e->getMessage();
 			$this->view->set('response',$this->error);
